@@ -18,4 +18,4 @@ if [ $# != 6 ]; then
   exit 1
 fi
 
-hadoop jar $MRClope_HOME/lib/MRClope.jar main.Clope $1 $2 $3 $4 $5 $6
+hadoop jar $MRClope_HOME/lib/MRClope.jar main.MRClope $1 $2 $3 $4 $5 $6
