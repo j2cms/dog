@@ -1,4 +1,4 @@
-package test;
+package main;
 
 import instance.Instance;
 import ipc.Clustering;
@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 
-import main.Clope;
 
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.ipc.RPC;
@@ -24,7 +23,7 @@ import org.apache.hadoop.ipc.RPC;
 import cluster.Cluster;
 import cluster.ClusterArrayList;
 
-public class TestClope {
+public class NativeClope {
 	
 	public static ClusterArrayList buildClusterer(ArrayList<Instance> data,double repulsion) throws IOException {
 
@@ -161,9 +160,14 @@ public class TestClope {
 
 	
 	public static void main(String[] args) throws Exception{
-		testMushroom();
+//		testMushroom();
 //		testDNS();
 //		testDNSr();
+		if ((args.length !=3) || (args[0].equals("-help"))) {
+			System.out.println("命令格式:main.NativeClope input output repulsion");
+			System.exit(-1);
+		}
+		execute(args[0],args[1],Double.valueOf(args[2]));
 	}
 
 }
