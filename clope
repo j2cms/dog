@@ -3,7 +3,7 @@
 print_usage()
 {
   echo "Usage: clope input output repulsion"
-  echo "参数解释如下:"
+  echo "[原始的CLOPE算法]参数解释如下:"
   echo "  input		输入文件或者目录,HDFS上的输入文件或者目录"
   echo "  output	输出目录,HDFS上的输出目录"
   echo "  repulsion	排斥值,符点型,值越小,生成聚类个数越少,反之越多"
@@ -15,4 +15,4 @@ if [ $# != 3 ]; then
   exit 1
 fi
 
-java jar $MRClope_HOME/lib/MRClope.jar main.NativeClope $1 $2 $3
+java -jar $MRClope_HOME/lib/MRClope.jar $1 $2 $3

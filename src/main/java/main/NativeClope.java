@@ -17,7 +17,6 @@ import java.util.Locale;
 
 
 
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.ipc.RPC;
 
 import cluster.Cluster;
