@@ -121,7 +121,7 @@ public class Clope {
 
 //		long n = 8124;
 
-		String dateTag ="/r=" + repulsion + "_p=" + p + "_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		String dateTag ="/r=" + repulsion + "_p=" + p + "_m=" + maxIter + "_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		String outputBasePath = basePath + dateTag;
 		String input = outputBasePath + "/input";
 		String spiltDir = basePath + "/split_"+p;
@@ -134,8 +134,8 @@ public class Clope {
 		Configuration conf = new Configuration();
 		conf.set("repulsion", String.valueOf(repulsion));
 		conf.setBoolean("number", number);
-		conf.setLong("mapred.min.split.size", 256 * 1024 * 1024);// 256M
-		conf.setLong("mapred.max.split.size", 256 * 1024 * 1024);
+		conf.setLong("mapred.min.split.size", 1024 * 1024 * 1024);// 1024M
+		conf.setLong("mapred.max.split.size", 1024 * 1024 * 1024);
 //		去掉后，只能打打包在服务器运行  2014.07.30 GT
 //		conf.set("mapred.job.tracker", "lenovo0:9001");
 		
@@ -234,7 +234,7 @@ public class Clope {
 		HDFSUtil.deletePath(outputBasePath+"/clustering");
 		HDFSUtil.deletePath(outputBasePath+"/input");
 		HDFSUtil.deletePath(outputBasePath+"/split");
-		for(int i =0;i<maxIter-1;i++){
+		for(int i =0;i<iter;i++){
 			HDFSUtil.deletePath(outputBasePath+"/output/"+i);
 			HDFSUtil.deletePath(outputBasePath+"/profit/"+i);
 		}
