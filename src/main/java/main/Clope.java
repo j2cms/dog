@@ -119,14 +119,14 @@ public class Clope {
 	 */
 	public static void buildClusterer(String inputFile, String basePath, double repulsion, int p , int maxIter, boolean number) throws Exception {
 
-		long n = 8124;
+//		long n = 8124;
 
 		String dateTag ="/r=" + repulsion + "_p=" + p + "_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		String outputBasePath = basePath + dateTag;
 		String input = outputBasePath + "/input";
 		String spiltDir = basePath + "/split_"+p;
 //		if (!HDFSUtil.exists(spiltDir))// 不存在的话生成一个，如果前面的操作已经生成过了，这里就不做了
-			HDFSUtil.spiltToNFile(inputFile, spiltDir, p);
+			long n =	HDFSUtil.spiltToNFile(inputFile, spiltDir, p);
 		HDFSUtil.generatePermFile(spiltDir, input);
 
 		String s;
