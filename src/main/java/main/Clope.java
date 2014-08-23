@@ -134,10 +134,10 @@ public class Clope {
 		Configuration conf = new Configuration();
 		conf.set("repulsion", String.valueOf(repulsion));
 		conf.setBoolean("number", number);
-		conf.setLong("mapred.min.split.size", 1024 * 1024 * 1024);// 1024M
-		conf.setLong("mapred.max.split.size", 1024 * 1024 * 1024);
+		conf.setLong("mapred.min.split.size", 256 * 1024 * 1024);// 1024M
+		conf.setLong("mapred.max.split.size", 256 * 1024 * 1024);
 //		去掉后，只能打打包在服务器运行  2014.07.30 GT
-//		conf.set("mapred.job.tracker", "lenovo0:9001");
+		conf.set("mapred.job.tracker", "lenovo0:9001");
 		
 		conf.set("mapred.job.priority", "HIGH");// VERY_HIGH,HIGH,NORMAL
 		conf.set("outputBasePath", outputBasePath);
@@ -165,10 +165,19 @@ public class Clope {
 
 		String[] d = ClusterUtil.getMaxtProfit(outputBasePath, iter);
 		
-		s = "Phase 1, best clustering is " + d[0] + ", cluster " + d[1] + ", profit " + d[2] + ", " + (double)Long.valueOf(d[2])/ n + ",time cost " + nf.format(time2 - time1) + " ms, HDFS time cost " + nf.format(timeCostHDFS) + " ms,  " + (double) timeCostHDFS / (time2 - time1) + "\n";
+		s = "Phase 1, best clustering is " + d[0] + ", cluster " + d[1] + ", profit " + d[2] + ", profit/n " + (double)Long.valueOf(d[2])/ n + ",time cost " + nf.format(time2 - time1) + " ms, HDFS time cost " + nf.format(timeCostHDFS) + " ms,  " + (double) timeCostHDFS / (time2 - time1) + "\n";
 		System.out.print(s);
 		bw.write(s);
 		
+		
+		
+		// 策略一 当前使用
+		String bestClusterId = d[0].substring(d[0].indexOf("/") + 1);
+		inputFile = "part-m-" + bestClusterId.substring(1);// 去掉前面一个0
+		// 策略一 可以删除无用的output和clustering
+		HDFSUtil.deleteDirExceptFile(output, inputFile);
+		HDFSUtil.deleteDirExceptFile(outputBasePath + "/clustering/" + iter, bestClusterId);
+		HDFSUtil.deleteDirExceptFile(outputBasePath + "/profit/" + iter, bestClusterId);
 		
 
 		// Phase 2
@@ -178,26 +187,25 @@ public class Clope {
 		long count = 0;
 
 		do {
-			// 策略一 当前使用
-			String bestClusterId = d[0].substring(d[0].indexOf("/") + 1);
-			inputFile = "part-m-" + bestClusterId.substring(1);// 去掉前面一个0
-			// 策略一 可以删除无用的output和clustering
-			HDFSUtil.deleteDirExceptFile(output, inputFile);
-			HDFSUtil.deleteDirExceptFile(outputBasePath + "/clustering/" + iter, bestClusterId);
-			HDFSUtil.deleteDirExceptFile(outputBasePath + "/profit/" + iter, bestClusterId);
+			
 			
 			iter++;
 			if(iter==maxIter)
 				break;
 			System.out.println("Phase 2,iter=" + iter + "...");
+			
+			//策略一 生成新的输入文件
 			inputFile = output +"/"+ inputFile;
 			spiltDir = outputBasePath + "/split";
 			HDFSUtil.spiltToNFile(inputFile, spiltDir, p);
 			HDFSUtil.generatePermFile(spiltDir,input);
+			
+			
 			conf.set("bestClusterId", bestClusterId);
 
-			// 策略二
+			// 策略二 　直接将输出作为输入
 			// input = output;
+			
 			output = outputBasePath + "/output/" + iter;
 			conf.setInt("iter", iter);
 			long t1 = System.currentTimeMillis();
@@ -211,10 +219,21 @@ public class Clope {
 			count = Integer.valueOf(d[3]);
 			moveCount += count;
 			moved = (count > 0 ? true : false);
-			s = "Phase 2,iter=" + iter + " done, best clustering is " + d[0] + ", NOT empty cluster " + d[1] + ", profit " + d[2] + ", " + (double)Long.valueOf(d[2])/ n + ", moveCount " + count + ", moved = " + moved + ", time cost " + nf.format(t2 - t1) + " ms, HDFS time cost " + nf.format(timeCostHDFS) + " ms, " + (double) timeCostHDFS / (t2 - t1) + "\n";
+			s = "Phase 2,iter=" + iter + " done, best clustering is " + d[0] + ", NOT empty cluster " + d[1] + ", profit " + d[2] + ", profit/n " + (double)Long.valueOf(d[2])/ n + ", moveCount " + count + ", moved = " + moved + ", time cost " + nf.format(t2 - t1) + " ms, HDFS time cost " + nf.format(timeCostHDFS) + " ms, " + (double) timeCostHDFS / (t2 - t1) + "\n";
 			System.out.print(s);
 			bw.write(s);
 
+			bestClusterId = d[0].substring(d[0].indexOf("/") + 1);
+			inputFile = "part-m-" + bestClusterId.substring(1);// 去掉前面一个0
+			// 策略一 可以删除无用的output和clustering
+			HDFSUtil.deleteDirExceptFile(output, inputFile);
+			HDFSUtil.deleteDirExceptFile(outputBasePath + "/clustering/" + iter, bestClusterId);
+			HDFSUtil.deleteDirExceptFile(outputBasePath + "/profit/" + iter, bestClusterId);
+			
+			//删除上一次跌失的结果
+			HDFSUtil.deletePath(outputBasePath+"/clustering/" + (iter-1));
+			HDFSUtil.deletePath(outputBasePath+"/output/" + (iter-1));
+			
 		} while (moved);
 		long time3 = System.currentTimeMillis();
 		s = "Phase 2 total moveCount= " + moveCount + ", total time cost " + nf.format(time3 - time2) + " ms\n";

@@ -16,7 +16,7 @@ public class MRClope {
 		String inputFile = basePath + "/split_3";
 		double r = 3.1;
 		int p = 4;
-		int maxIter = 1;
+		int maxIter = 100;
 		Clope.buildClusterer(inputFile, basePath, r, p, maxIter,true);
 	}
 
