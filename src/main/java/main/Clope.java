@@ -134,8 +134,8 @@ public class Clope {
 		Configuration conf = new Configuration();
 		conf.set("repulsion", String.valueOf(repulsion));
 		conf.setBoolean("number", number);
-		conf.setLong("mapred.min.split.size", 256 * 1024 * 1024);// 1024M
-		conf.setLong("mapred.max.split.size", 256 * 1024 * 1024);
+		conf.setLong("mapred.min.split.size", 1024 * 1024 * 1024);// 1024M
+		conf.setLong("mapred.max.split.size", 1024 * 1024 * 1024);
 //		去掉后，只能打打包在服务器运行  2014.07.30 GT
 		conf.set("mapred.job.tracker", "lenovo0:9001");
 		
