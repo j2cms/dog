@@ -4,12 +4,12 @@ print_usage()
 {
   echo "Usage: mrclope input output repulsion p maxIter number"
   echo "参数解释如下:"
-  echo "  input		输入文件或者目录,HDFS上的输入文件或者目录"
-  echo "  output	输出目录,HDFS上的输出目录"
-  echo "  repulsion	排斥值,符点型,值越小,生成聚类个数越少,反之越多"
-  echo "  p		排列参数,整型,会生成p!个map,p越大,准确率越高.建议设置不超过5"
-  echo "  maxIter	最大迭代次数,越大,聚类越准确但花费时间越多,建议设置不超过2"
-  echo "  number	是否编号,表示每条事务的每个item是否对应特定列"
+  echo "  input		HDFS上的输入文件或者目录"
+  echo "  output	HDFS上的输出目录"
+  echo "  repulsion	排斥因子,符点型,一般大于1,值越小,生成聚类个数越少,反之越多"
+  echo "  p		排列参数,整型,会生成p!个map,值越大,准确率越高.建议设置不超过5"
+  echo "  maxIter	最大迭代次数,整型,值越大,聚类越准确但花费时间越多"
+  echo "  isNumber	数据记录的属性项是否需要编号,布尔型,用1|0表示"
 }
 # if no args specified, show usage
 #[ $# = 0 ]
