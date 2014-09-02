@@ -31,7 +31,8 @@ public class ClusterUtil {
 
 		String[] d = new String[4];
 
-		long maxProfit = -1;
+//		long maxProfit = -1;
+		double maxProfit = -1;
 
 		Configuration conf = new Configuration();
 		FileSystem hdfs = FileSystem.get(conf); // 获得HDFS文件系统的对象
@@ -56,7 +57,8 @@ public class ClusterUtil {
 			LineReader lr = new LineReader(in, conf);
 			lr.readLine(line);
 			String[] tokens = line.toString().split(",");
-			long profit = Long.valueOf(tokens[1]);
+//			long profit = Long.valueOf(tokens[1]);
+			double profit = Double.valueOf(tokens[1]);
 			if (profit > maxProfit) {
 				maxProfit = profit;
 				d[0] = inputFiles[i].getPath().toString();
@@ -86,7 +88,7 @@ public class ClusterUtil {
 		String profitPath = conf.get("outputBasePath") + "/profit/" + conf.get("iter") + "/" + id;
 		out = hdfs.create(new Path(profitPath));
 		System.out.println("profitPath=" + profitPath);
-		long d[] = clusters.getSizeOfNotEmptyAndProfit(repulsion);
+		double d[] = clusters.getSizeOfNotEmptyAndProfit(repulsion);
 
 		if(move ==null ) move = 0;
 		

@@ -87,7 +87,7 @@ public class ClusteringImpl implements Clustering {
 	}
 	
 	@Override
-	public long[] getSizeOfNotEmptyAndProfit(double r ) {
+	public double[] getSizeOfNotEmptyAndProfit(double r ) {
 		return clusterArrayList.getSizeOfNotEmptyAndProfit(r);
 	}
 	

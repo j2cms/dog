@@ -33,7 +33,8 @@ public class NativeClope {
 		
 		NumberFormat nf = NumberFormat.getInstance(Locale.CHINA);
 		boolean moved;
-		long d[];
+//		long d[];
+		double d[];
 		int n = data.size();
 		System.out.println("Phase 1...");
 		long time1 = System.currentTimeMillis();

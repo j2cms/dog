@@ -31,7 +31,7 @@ public class ClusterArrayList extends ArrayList<Cluster> implements Writable {
 		}
 	}
 
-	public long[] getSizeOfNotEmptyAndProfit(double r ) {
+	public double[] getSizeOfNotEmptyAndProfit(double r ) {
 		int count = 0;
 		double profit = 0 ;		
 		for (int i = 0; i < this.size(); i++) {
@@ -42,11 +42,12 @@ public class ClusterArrayList extends ArrayList<Cluster> implements Writable {
 //				}
 //				if(incre==Double.NaN)//不能进行这种比较
 				profit +=  (c.getS() * c.getN() / Math.pow(c.getW(), r));
+				System.out.println("c.getW()==0|i="+i+","+c.getS()+","+c.getN()+","+c.getW());
 				count++;
 			}				
 		}
 //		System.out.println("profit="+profit);
-		return new long[]{count,(long) profit} ;
+		return new double[]{count,profit} ;
 	}
 	
 	public int getSizeOfNotEmpty() {

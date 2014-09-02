@@ -164,8 +164,9 @@ public class Clope {
 		long time2 = System.currentTimeMillis();
 
 		String[] d = ClusterUtil.getMaxtProfit(outputBasePath, iter);
+		double k =  Double.valueOf(d[1]);
 		
-		s = "Phase 1, best clustering is " + d[0] + ", cluster " + d[1] + ", profit " + d[2] + ", profit/n " + (double)Long.valueOf(d[2])/ n + ",time cost " + nf.format(time2 - time1) + " ms, HDFS time cost " + nf.format(timeCostHDFS) + " ms,  " + (double) timeCostHDFS / (time2 - time1) + "\n";
+		s = "Phase 1, best clustering is " + d[0] + ", cluster " + (int)(k) + ", profit " + d[2] + ", profit/n " + Double.valueOf(d[2])/ n + ",time cost " + nf.format(time2 - time1) + " ms, HDFS time cost " + nf.format(timeCostHDFS) + " ms,  " + (double) timeCostHDFS / (time2 - time1) + "\n";
 		System.out.print(s);
 		bw.write(s);
 		
@@ -219,7 +220,8 @@ public class Clope {
 			count = Integer.valueOf(d[3]);
 			moveCount += count;
 			moved = (count > 0 ? true : false);
-			s = "Phase 2,iter=" + iter + " done, best clustering is " + d[0] + ", NOT empty cluster " + d[1] + ", profit " + d[2] + ", profit/n " + (double)Long.valueOf(d[2])/ n + ", moveCount " + count + ", moved = " + moved + ", time cost " + nf.format(t2 - t1) + " ms, HDFS time cost " + nf.format(timeCostHDFS) + " ms, " + (double) timeCostHDFS / (t2 - t1) + "\n";
+			k =  Double.valueOf(d[1]);
+			s = "Phase 2,iter=" + iter + " done, best clustering is " + d[0] + ", NOT empty cluster " + (int)(k) + ", profit " + d[2] + ", profit/n " + Double.valueOf(d[2])/ n + ", moveCount " + count + ", moved = " + moved + ", time cost " + nf.format(t2 - t1) + " ms, HDFS time cost " + nf.format(timeCostHDFS) + " ms, " + (double) timeCostHDFS / (t2 - t1) + "\n";
 			System.out.print(s);
 			bw.write(s);
 

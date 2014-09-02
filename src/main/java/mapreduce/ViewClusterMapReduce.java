@@ -49,7 +49,7 @@ public class ViewClusterMapReduce {
 	public static void job(String inputFile,String outputDir,int numReduceTask) throws Exception{
 		Configuration conf = new Configuration();
 		// 这句话很关键
-		conf.set("mapred.job.tracker", "lenovo0:9001");
+//		conf.set("mapred.job.tracker", "lenovo0:9001");
 
 		Job job = new Job(conf, "generate cluster to view");
 		job.setJarByClass(ViewClusterMapReduce.class);

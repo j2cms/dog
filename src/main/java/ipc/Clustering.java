@@ -33,7 +33,7 @@ public interface Clustering extends VersionedProtocol {
 
 	public double getProfit();
 	
-	abstract public long[] getSizeOfNotEmptyAndProfit(double r );
+	abstract public double[] getSizeOfNotEmptyAndProfit(double r );
 	
 	abstract public int getSizeOfCluster(int clusterId);
 	
