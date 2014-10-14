@@ -45,6 +45,11 @@ public class MRClope {
 			num = true;
 		else if (args[5].equals("0") || args[5].equals("false"))
 			num = false;
+		
+		for(String arg:args)
+			System.out.print(arg+"\t");
+		System.out.println();
+		
 		Clope.buildClusterer(args[0], args[1], Double.valueOf(args[2]), Integer.valueOf(args[3]), Integer.valueOf(args[4]), num);
 
 	}

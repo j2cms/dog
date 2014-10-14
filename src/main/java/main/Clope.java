@@ -125,8 +125,9 @@ public class Clope {
 		String outputBasePath = basePath + dateTag;
 		String input = outputBasePath + "/input";
 		String spiltDir = basePath + "/split_"+p;
-//		if (!HDFSUtil.exists(spiltDir))// 不存在的话生成一个，如果前面的操作已经生成过了，这里就不做了
-			long n =	HDFSUtil.spiltToNFile(inputFile, spiltDir, p);
+		long n = 6;
+		if (!HDFSUtil.exists(spiltDir))// 不存在的话生成一个，如果前面的操作已经生成过了，这里就不做了
+			 n =	HDFSUtil.spiltToNFile(inputFile, spiltDir, p);
 		HDFSUtil.generatePermFile(spiltDir, input);
 
 		String s;
@@ -137,7 +138,7 @@ public class Clope {
 		conf.setLong("mapred.min.split.size", 1024 * 1024 * 1024);// 1024M
 		conf.setLong("mapred.max.split.size", 1024 * 1024 * 1024);
 //		去掉后，只能打打包在服务器运行  2014.07.30 GT
-		conf.set("mapred.job.tracker", "lenovo0:9001");
+//		conf.set("mapred.job.tracker", "lenovo0:9001");
 		
 		conf.set("mapred.job.priority", "HIGH");// VERY_HIGH,HIGH,NORMAL
 		conf.set("outputBasePath", outputBasePath);
@@ -175,10 +176,10 @@ public class Clope {
 		// 策略一 当前使用
 		String bestClusterId = d[0].substring(d[0].indexOf("/") + 1);
 		inputFile = "part-m-" + bestClusterId.substring(1);// 去掉前面一个0
-		// 策略一 可以删除无用的output和clustering
-		HDFSUtil.deleteDirExceptFile(output, inputFile);
-		HDFSUtil.deleteDirExceptFile(outputBasePath + "/clustering/" + iter, bestClusterId);
-		HDFSUtil.deleteDirExceptFile(outputBasePath + "/profit/" + iter, bestClusterId);
+//		// 策略一 可以删除无用的output和clustering
+//		HDFSUtil.deleteDirExceptFile(output, inputFile);
+//		HDFSUtil.deleteDirExceptFile(outputBasePath + "/clustering/" + iter, bestClusterId);
+//		HDFSUtil.deleteDirExceptFile(outputBasePath + "/profit/" + iter, bestClusterId);
 		
 
 		// Phase 2
@@ -227,14 +228,14 @@ public class Clope {
 
 			bestClusterId = d[0].substring(d[0].indexOf("/") + 1);
 			inputFile = "part-m-" + bestClusterId.substring(1);// 去掉前面一个0
-			// 策略一 可以删除无用的output和clustering
-			HDFSUtil.deleteDirExceptFile(output, inputFile);
-			HDFSUtil.deleteDirExceptFile(outputBasePath + "/clustering/" + iter, bestClusterId);
-			HDFSUtil.deleteDirExceptFile(outputBasePath + "/profit/" + iter, bestClusterId);
-			
-			//删除上一次跌失的结果
-			HDFSUtil.deletePath(outputBasePath+"/clustering/" + (iter-1));
-			HDFSUtil.deletePath(outputBasePath+"/output/" + (iter-1));
+//			// 策略一 可以删除无用的output和clustering
+//			HDFSUtil.deleteDirExceptFile(output, inputFile);
+//			HDFSUtil.deleteDirExceptFile(outputBasePath + "/clustering/" + iter, bestClusterId);
+//			HDFSUtil.deleteDirExceptFile(outputBasePath + "/profit/" + iter, bestClusterId);
+//			
+//			//删除上一次跌失的结果
+//			HDFSUtil.deletePath(outputBasePath+"/clustering/" + (iter-1));
+//			HDFSUtil.deletePath(outputBasePath+"/output/" + (iter-1));
 			
 		} while (moved);
 		long time3 = System.currentTimeMillis();
@@ -252,13 +253,16 @@ public class Clope {
 		bw.close();
 		out.close();
 		
-		HDFSUtil.deletePath(outputBasePath+"/clustering");
-		HDFSUtil.deletePath(outputBasePath+"/input");
-		HDFSUtil.deletePath(outputBasePath+"/split");
-		for(int i =0;i<iter;i++){
-			HDFSUtil.deletePath(outputBasePath+"/output/"+i);
-			HDFSUtil.deletePath(outputBasePath+"/profit/"+i);
-		}
+//		HDFSUtil.deletePath(outputBasePath+"/clustering");
+//		HDFSUtil.deletePath(outputBasePath+"/input");
+//		HDFSUtil.deletePath(outputBasePath+"/split");
+//		for(int i =0;i<iter;i++){
+//			HDFSUtil.deletePath(outputBasePath+"/output/"+i);
+//			HDFSUtil.deletePath(outputBasePath+"/profit/"+i);
+//		}
+//		
+//		//做大数据实验时防止空间不够
+//		HDFSUtil.deletePath(outputBasePath);
 		
 		System.out.println("done!");
 
