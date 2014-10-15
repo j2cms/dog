@@ -35,6 +35,7 @@ public class AddToClusterMapReduce {
 		public ClusterArrayList clusters = new ClusterArrayList();
 		double repulsion;
 		boolean number = false;
+		long n;
 
 		@Override
 		protected void setup(Context context) throws IOException, InterruptedException {
@@ -45,6 +46,8 @@ public class AddToClusterMapReduce {
 			Configuration conf = context.getConfiguration();
 			repulsion = Double.valueOf(conf.get("repulsion","2.6"));
 			number = conf.getBoolean("number", false);
+			n = conf.getLong("n", 1L);
+			
 
 			// 测试一下taskID是否和生成的文件的编号是致的，结果发现是一致的
 			// String id = context.getTaskAttemptID().getTaskID().toString();
@@ -65,7 +68,7 @@ public class AddToClusterMapReduce {
 		@Override
 		protected void cleanup(Context context) throws IOException, InterruptedException {
 			long begin = System.currentTimeMillis();
-			ClusterUtil.writeCluterToHDHS(context, clusters, null, repulsion);
+			ClusterUtil.writeCluterToHDHS(context, clusters, null, repulsion,n);
 			clusters.clear();
 			long timeCostHDFS = (System.currentTimeMillis() - begin);
 			context.getCounter(Counter.TIME_COST_PHASE1).increment(timeCostHDFS);

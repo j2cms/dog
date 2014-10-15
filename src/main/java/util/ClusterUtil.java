@@ -72,7 +72,7 @@ public class ClusterUtil {
 		return d;
 	}
 
-	public static void writeCluterToHDHS(Context context,ClusterArrayList clusters,Integer move,double repulsion) throws IOException {
+	public static void writeCluterToHDHS(Context context,ClusterArrayList clusters,Integer move,double repulsion,long n) throws IOException {
 		String id = context.getTaskAttemptID().getTaskID().toString();
 		id = id.substring(id.lastIndexOf("_") + 1);
 
@@ -88,7 +88,7 @@ public class ClusterUtil {
 		String profitPath = conf.get("outputBasePath") + "/profit/" + conf.get("iter") + "/" + id;
 		out = hdfs.create(new Path(profitPath));
 		System.out.println("profitPath=" + profitPath);
-		double d[] = clusters.getSizeOfNotEmptyAndProfit(repulsion);
+		double d[] = clusters.getSizeOfNotEmptyAndProfit(repulsion,n);
 
 		if(move ==null ) move = 0;
 		

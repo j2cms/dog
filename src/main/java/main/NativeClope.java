@@ -43,7 +43,7 @@ public class NativeClope {
 			Clope.addInstanceToBestCluster(data.get(i),clusters,repulsion);
 		}
 		long time2 = System.currentTimeMillis();
-		d = clusters.getSizeOfNotEmptyAndProfit(repulsion);
+		d = clusters.getSizeOfNotEmptyAndProfit(repulsion,n);
 		
 		System.out.println("Phase 1 done, time cost " + nf.format(time2 - time1) + " ms, generate cluster " + clusters.size()+ ", profit = "+d[1]+", "+( (double) d[1])/n);
 		
@@ -71,7 +71,7 @@ public class NativeClope {
 			}
 			t2 = System.currentTimeMillis();
 			
-			d = clusters.getSizeOfNotEmptyAndProfit(repulsion);
+			d = clusters.getSizeOfNotEmptyAndProfit(repulsion,n);
 			
 			System.out.println("Phase 2,iter " + iter+" done, movedCount " + movedCount+", time cost "+nf.format(t2-t1)+" ms"+", Not Empty Cluster "+ d[0]+", profit = "+d[1]+", "+((double) d[1])/n+"\n");
 		} while (moved);

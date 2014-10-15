@@ -108,11 +108,14 @@ public class MoveToClusterMapReduce {
 		int move = 0;
 		long timeCostHDFS;
 		double repulsion ;
+		long n;
 
 		public ClusterArrayList clusters = new ClusterArrayList();
 
 		protected void setup(Context context) throws IOException, InterruptedException {
-			repulsion = Double.valueOf( context.getConfiguration().get("repulsion"));
+			Configuration conf = context.getConfiguration();
+			repulsion = Double.valueOf( conf.get("repulsion"));
+			n = conf.getLong("n", 1L);
 			move = 0;
 			timeCostHDFS = 0;
 			long begin = System.currentTimeMillis();
@@ -124,7 +127,6 @@ public class MoveToClusterMapReduce {
 
 			//策略二
 			String id = path.substring(path.lastIndexOf("-") + 1);
-			Configuration conf = context.getConfiguration();
 			Integer iter = Integer.valueOf(conf.get("iter")) - 1;//是上一次的
 			String outputBasePath = conf.get("outputBasePath");
 			String clusterPath = outputBasePath + "/clustering/" + iter + "/0" + id;
@@ -164,7 +166,7 @@ public class MoveToClusterMapReduce {
 		protected void cleanup(Context context) throws IOException, InterruptedException {
 			long begin = System.currentTimeMillis();
 
-			ClusterUtil.writeCluterToHDHS(context, clusters, move,repulsion);
+			ClusterUtil.writeCluterToHDHS(context, clusters, move,repulsion,n);
 
 			timeCostHDFS += (System.currentTimeMillis() - begin);
 			context.getCounter(Counter.TIME_COST_HDFS).increment(timeCostHDFS);
