@@ -5,13 +5,13 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Writable;
 
 
-@SuppressWarnings("serial")
+//@SuppressWarnings("serial")
 public class ClusterArrayList extends ArrayList<Cluster> implements Writable {
 
+	private static final long serialVersionUID = 3660203400149921135L;
 
 	@Override
 	public void readFields(DataInput in) throws IOException {

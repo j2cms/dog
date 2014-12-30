@@ -5,7 +5,6 @@ import instance.Instance;
 
 import java.io.IOException;
 
-
 import main.Clope;
 
 import org.apache.hadoop.conf.Configuration;
@@ -22,7 +21,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 import util.ClusterUtil;
-
 import cluster.ClusterArrayList;
 
 public class AddToClusterMapReduce {
@@ -68,7 +66,7 @@ public class AddToClusterMapReduce {
 		@Override
 		protected void cleanup(Context context) throws IOException, InterruptedException {
 			long begin = System.currentTimeMillis();
-			ClusterUtil.writeCluterToHDHS(context, clusters, null, repulsion,n);
+			ClusterUtil.writeCluterToHDFS(context, clusters, null, repulsion,n);
 			clusters.clear();
 			long timeCostHDFS = (System.currentTimeMillis() - begin);
 			context.getCounter(Counter.TIME_COST_PHASE1).increment(timeCostHDFS);

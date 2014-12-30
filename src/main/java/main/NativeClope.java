@@ -1,8 +1,6 @@
 package main;
 
 import instance.Instance;
-import ipc.Clustering;
-import ipc.IPCUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,10 +12,6 @@ import java.io.InputStreamReader;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-
-
-
-import org.apache.hadoop.ipc.RPC;
 
 import cluster.Cluster;
 import cluster.ClusterArrayList;

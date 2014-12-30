@@ -3,14 +3,12 @@ package util;
 
 import java.io.IOException;
 
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.apache.hadoop.util.LineReader;
@@ -72,7 +70,7 @@ public class ClusterUtil {
 		return d;
 	}
 
-	public static void writeCluterToHDHS(Context context,ClusterArrayList clusters,Integer move,double repulsion,long n) throws IOException {
+	public static void writeCluterToHDFS(Context context,ClusterArrayList clusters,Integer move,double repulsion,long n) throws IOException {
 		String id = context.getTaskAttemptID().getTaskID().toString();
 		id = id.substring(id.lastIndexOf("_") + 1);
 

@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableUtils;
 
-public class Instance implements WritableComparable<Object> {
-
+public class Instance implements WritableComparable<Object>, Cloneable {
 	protected int clusterId;
 	protected String key;
 	protected int itemSize;
@@ -17,52 +16,46 @@ public class Instance implements WritableComparable<Object> {
 
 	public Instance() {
 		key = new String();
-
 	}
-
-//	public Instance(String key) {
-//		clusterId = -1;
-//		this.key = key;
-//		itemList = new ArrayList<String>();
-//	}
 
 	/**
 	 * Add 时有是否带编号的选择
+	 * 
 	 * @param tokens
 	 * @param number
 	 */
-	public Instance(String[] tokens ,boolean number) {
+	public Instance(String[] tokens, boolean number) {
 		this.clusterId = -1;
 		this.key = tokens[0];
 		itemList = new ArrayList<String>();
-		if(number)
+		if (number)
 			for (int i = 1; i < tokens.length; i++)
 				// 同一维度才能相比，所以要加上维度编号
 				itemList.add(new String(tokens[i] + "(" + i + ")"));
 		else
 			for (int i = 1; i < tokens.length; i++)
 				itemList.add(new String(tokens[i]));
-			
+
 		this.itemSize = this.itemList.size();
 	}
-	
+
 	/**
 	 * Add时,从map读入一行时构造一个实例,带编号
 	 * 
 	 * @param line
 	 */
-	public Instance(String line,boolean number) {
+	public Instance(String line, boolean number) {
 		this.clusterId = -1;
 		String[] tokens = line.toString().split("\\,");
 		this.key = tokens[0];
 		itemList = new ArrayList<String>();
 		for (int i = 1; i < tokens.length; i++)
-//			 itemList.add(new String(tokens[i]));
+			// itemList.add(new String(tokens[i]));
 			// 同一维度才能相比，所以要加上维度编号
 			itemList.add(new String(tokens[i] + "(" + i + ")"));
 		this.itemSize = this.itemList.size();
 	}
-	
+
 	/**
 	 * Add时,从map读入一行时构造一个实例，不带编号
 	 * 
@@ -74,7 +67,7 @@ public class Instance implements WritableComparable<Object> {
 		this.key = tokens[0];
 		itemList = new ArrayList<String>();
 		for (int i = 1; i < tokens.length; i++)
-			 itemList.add(new String(tokens[i]));
+			itemList.add(new String(tokens[i]));
 		this.itemSize = this.itemList.size();
 	}
 
@@ -113,6 +106,10 @@ public class Instance implements WritableComparable<Object> {
 		return itemList;
 	}
 
+	public void setItemList(ArrayList<String> itemList) {
+		this.itemList = itemList;
+	}
+
 	public String info() {
 		return "Instance info [clusterId=" + clusterId + ", key=" + key + ", itemSize=" + itemSize + ", itemList=" + itemList + "]";
 	}
@@ -124,7 +121,7 @@ public class Instance implements WritableComparable<Object> {
 		itemSize = WritableUtils.readVInt(in);
 		itemList = new ArrayList<String>();
 		for (int i = 0; i < itemSize; i++) {
-			String t =WritableUtils.readString(in);
+			String t = WritableUtils.readString(in);
 			itemList.add(t);
 		}
 	}
@@ -153,6 +150,30 @@ public class Instance implements WritableComparable<Object> {
 		for (int i = 0; i < itemList.size(); i++)
 			sb.append(",").append(itemList.get(i).toString());
 		return sb.toString();
+	}
+
+	@Override
+	public Instance clone() {
+		Instance o = null;
+		try {
+			o = (Instance) super.clone();
+			
+			o = new Instance(this.toString());
+			
+			
+//			o.key = new String(this.key);
+//
+//			ArrayList<String> itemList = new ArrayList<String>();
+//			for (int i = 0; i < this.itemList.size(); i++) {
+//				itemList.set(i, this.itemList.get(i));
+//			}
+//			
+//			o.setItemList(itemList);
+			
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return o;
 	}
 
 }

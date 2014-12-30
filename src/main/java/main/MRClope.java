@@ -31,11 +31,6 @@ public class MRClope {
 	
 	
 	public static void main(String[] args) throws Exception {
-
-		// testPeter();
-		// testMushroom();
-		// testDNS();
-
 		if ((args.length < 5) || (args[0].equals("-help"))) {
 			System.out.println("命令格式:hadoop jar MRClope.jar main.Clope input output repulsion p maxIter number");
 			System.exit(-1);
@@ -49,9 +44,7 @@ public class MRClope {
 		for(String arg:args)
 			System.out.print(arg+"\t");
 		System.out.println();
-		
 		Clope.buildClusterer(args[0], args[1], Double.valueOf(args[2]), Integer.valueOf(args[3]), Integer.valueOf(args[4]), num);
-
 	}
 
 }

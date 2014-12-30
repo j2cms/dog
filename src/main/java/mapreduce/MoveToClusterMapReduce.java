@@ -21,6 +21,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import util.ClusterUtil;
 
+import cluster.Cluster;
 import cluster.ClusterArrayList;
 
 public class MoveToClusterMapReduce {
@@ -166,7 +167,7 @@ public class MoveToClusterMapReduce {
 		protected void cleanup(Context context) throws IOException, InterruptedException {
 			long begin = System.currentTimeMillis();
 
-			ClusterUtil.writeCluterToHDHS(context, clusters, move,repulsion,n);
+			ClusterUtil.writeCluterToHDFS(context, clusters, move,repulsion,n);
 
 			timeCostHDFS += (System.currentTimeMillis() - begin);
 			context.getCounter(Counter.TIME_COST_HDFS).increment(timeCostHDFS);

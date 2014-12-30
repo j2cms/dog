@@ -119,7 +119,6 @@ public class Cluster implements Writable {
 	}
 
 	public double deltaAdd(Instance inst, double r) {
-		// System.out.println("DeltaAdd");
 		int S_new;
 		int W_new;
 		double profit;
@@ -194,7 +193,7 @@ public class Cluster implements Writable {
 		S = WritableUtils.readVInt(in);
 		W = WritableUtils.readVInt(in);
 		N = WritableUtils.readVInt(in);
-		occ = new HashMap<String, Integer>();//!
+		occ = new HashMap<String, Integer>();
 		for (int i = 0; i < W; i++) {
 			String t =WritableUtils.readString(in);
 			int freq = WritableUtils.readVInt(in);

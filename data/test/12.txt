@@ -1,0 +1,12 @@
+1,a,b,d
+2,b,c,d
+3,a,c,d
+4,a,b,c
+5,a,b
+6,b,c
+7,a,c
+8,b,c,d,e
+9,a,c,d,e
+10,a,b,d,e
+11,a,b,c,e
+12,a,b,c,d

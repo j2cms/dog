@@ -147,11 +147,27 @@ public class HDFSUtil {
 	 * @param o
 	 * @throws Exception
 	 */
-	public static void write(String path, Writable o) throws Exception {
+	public static void write(String path, Writable o) throws IOException {
+		write(new Path(path),o);
+	}
+	
+	public static void write(Path path, Writable o) throws IOException {
 		FileSystem fs = FileSystem.get(new Configuration());
-		FSDataOutputStream out = fs.create(new Path(path));
+		FSDataOutputStream out = fs.create(path);
 		o.write(out);
 		out.close();
+	}
+	
+	public static Writable read(String path, Writable o) throws IOException {
+		return read(new Path(path),o);
+	}
+	
+	public static Writable read(Path path, Writable o) throws IOException {
+		FileSystem hdfs = FileSystem.get(new Configuration());
+		FSDataInputStream in = hdfs.open(path);// 打开本地输入流
+		o.readFields(in);
+		in.close();
+		return o;
 	}
 
 	/**
