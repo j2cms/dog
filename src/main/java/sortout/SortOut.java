@@ -1,5 +1,7 @@
 package sortout;
 
+import util.HDFSUtil;
+
 
 public class SortOut {
 
@@ -13,6 +15,9 @@ public class SortOut {
 		}
 
 		SortOutClusterMapReduce.job(args[0], args[1], Integer.valueOf(args[2]));
+		HDFSUtil.deleteNoUse(args[1]);
+		
+		System.out.println("done!");
 	}
 
 }

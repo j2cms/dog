@@ -2,6 +2,7 @@ package kmodes;
 
 import instance.Instance;
 
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -34,6 +35,8 @@ public class KModes {
 			
 			Configuration conf = new Configuration();
 //			conf.set("mapred.job.tracker", "master:9001");
+			conf.set("mapreduce.framework.name", "yarn");
+		    conf.set("yarn.resourcemanager.hostname", InetAddress.getLocalHost().getHostName());
 			conf.set("outputBasePath", outputBasePath);
 			conf.setInt("iter", iter);
 

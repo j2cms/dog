@@ -1,6 +1,6 @@
 package test;
 
-import pclope.Clope;
+import pclope.PClope;
 
 public class TestMRClope {
 
@@ -10,7 +10,7 @@ public class TestMRClope {
 		double r = 2.0;
 		int p = 6;
 		int maxIter = 10;
-		Clope.buildClusterer(inputFile, output, r, p, maxIter,false);
+		PClope.buildClusterer(inputFile, output, r, p, maxIter,false);
 	}
 	
 	public static void main(String[] args) throws Exception {

@@ -25,9 +25,9 @@ import cluster.ClusterArrayList;
 
 public class AddToClusterMapReduce {
 
-	public static enum Counter {
-		TIME_COST_PHASE1
-	}
+//	public static enum Counter {
+//		TIME_COST_PHASE1
+//	}
 
 	public static class AddToClusterMapper extends Mapper<LongWritable, Text, IntWritable, Instance> {
 		public ClusterArrayList clusters = new ClusterArrayList();
@@ -45,7 +45,6 @@ public class AddToClusterMapReduce {
 			repulsion = Double.valueOf(conf.get("repulsion","2.6"));
 			number = conf.getBoolean("number", false);
 			n = conf.getLong("n", 1L);
-			
 
 			// 测试一下taskID是否和生成的文件的编号是致的，结果发现是一致的
 			// String id = context.getTaskAttemptID().getTaskID().toString();
@@ -65,40 +64,15 @@ public class AddToClusterMapReduce {
 
 		@Override
 		protected void cleanup(Context context) throws IOException, InterruptedException {
-			long begin = System.currentTimeMillis();
+//			long begin = System.currentTimeMillis();
 			ClusterUtil.writeCluterToHDFS(context, clusters, null, repulsion,n);
 			clusters.clear();
-			long timeCostHDFS = (System.currentTimeMillis() - begin);
-			context.getCounter(Counter.TIME_COST_PHASE1).increment(timeCostHDFS);
+//			long timeCostHDFS = (System.currentTimeMillis() - begin);
+//			context.getCounter(Counter.TIME_COST_PHASE1).increment(timeCostHDFS);
 		}
 	}
 
-	// public static class AddToClusterReducer extends Reducer<IntWritable,
-	// Instance, IntWritable, Text> {
-	//
-	// @Override
-	// protected void reduce(IntWritable key, Iterable<Instance> values, Context
-	// context) throws IOException, InterruptedException {
-	// for (Instance val : values) {
-	// context.write(key, new Text(val.toString()));
-	// }
-	// }
-	//
-	// // @Override
-	// // protected void cleanup(Context context) throws IOException,
-	// // InterruptedException {
-	// // Configuration conf = context.getConfiguration();
-	// // FileSystem fs = FileSystem.get(conf);
-	// // Path outCluster = new Path(conf.get("clope.temp.newcluster"));
-	// // FSDataOutputStream out = fs.create(outCluster);
-	// // out.writeInt(Clope.globalClusters.size());
-	// // for (int i = 0; i < Clope.globalClusters.size(); i++)
-	// // Clope.globalClusters.get(i).write(out);
-	// // out.close();
-	// // }
-	// }
-
-	public static long job(Configuration conf, Path input, Path output) throws Exception {
+	public static void job(Configuration conf, Path input, Path output) throws Exception {
 		Job job = new Job(conf, "CLOPE Phase 1");
 
 		job.setJarByClass(AddToClusterMapReduce.class);
@@ -125,8 +99,8 @@ public class AddToClusterMapReduce {
 		// CombineFileInputFormat.addInputPath(job, input);
 		FileOutputFormat.setOutputPath(job, output);
 		job.waitForCompletion(true);
-		long timeCostIPC = job.getCounters().findCounter(Counter.TIME_COST_PHASE1).getValue();
-		return timeCostIPC;
+//		long timeCostIPC = job.getCounters().findCounter(Counter.TIME_COST_PHASE1).getValue();
+//		return timeCostIPC;
 	}
 
 }
