@@ -1,6 +1,8 @@
-package main;
+package pclope;
 
 import instance.Instance;
+import ipc.Clustering;
+import ipc.IPCUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,17 +15,25 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+
+
+import org.apache.hadoop.ipc.RPC;
+
 import cluster.Cluster;
 import cluster.ClusterArrayList;
-
-public class NativeClope {
+/**
+ * 将结果会写回IPC
+ * @author aleak
+ *
+ */
+public class NativeClopeIPC {
 	
 	public static ClusterArrayList buildClusterer(ArrayList<Instance> data,double repulsion) throws IOException {
 
 		ClusterArrayList clusters = new ClusterArrayList();
 		
-//		Clustering clustering = IPCUtil.getProxy();
-//		clustering.clear();
+		Clustering clustering = IPCUtil.getProxy();
+		clustering.clear();
 		
 		NumberFormat nf = NumberFormat.getInstance(Locale.CHINA);
 		boolean moved;
@@ -42,7 +52,7 @@ public class NativeClope {
 		System.out.println("Phase 1 done, time cost " + nf.format(time2 - time1) + " ms, generate cluster " + clusters.size()+ ", profit = "+d[1]+", "+( (double) d[1])/n);
 		
 		long t1 = System.currentTimeMillis();
-//		clustering.set(clusters);
+		clustering.set(clusters);
 		long t2 = System.currentTimeMillis();
 		System.out.println("Phase 1 IPC cost " + nf.format(t2 - t1) + " ms"+"\n");
 
@@ -75,12 +85,12 @@ public class NativeClope {
 		
 		//将结果写回IPC
 		t1 = System.currentTimeMillis();
-//		clustering.clear();
-//		clustering.set(clusters);
+		clustering.clear();
+		clustering.set(clusters);
 		t2 = System.currentTimeMillis();
 		System.out.println("Phase 2 IPC cost " + nf.format(t2 - t1) + " ms");
 		
-//		RPC.stopProxy(clustering);
+		RPC.stopProxy(clustering);
 
 		return clusters;
 	}

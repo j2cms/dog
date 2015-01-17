@@ -1,6 +1,6 @@
-package main;
+package pclope;
 
-public class MRClope {
+public class PClope {
 
 	public static void testDNS() throws Exception {
 		// repulsion = 1.8;
@@ -31,20 +31,20 @@ public class MRClope {
 	
 	
 	public static void main(String[] args) throws Exception {
-		if ((args.length < 5) || (args[0].equals("-help"))) {
-			System.out.println("命令格式:hadoop jar MRClope.jar main.Clope input output repulsion p maxIter number");
+		if ((args.length < 6) || (args[0].equals("-help"))) {
+			System.out.println("命令格式:hadoop jar dog.jar pclope.PClope input output repulsion p maxIter isNumber");
 			System.exit(-1);
 		}
-		boolean num = false;
+		boolean isNumber = false;
 		if (args[5].equals("1") || args[5].equals("true"))
-			num = true;
+			isNumber = true;
 		else if (args[5].equals("0") || args[5].equals("false"))
-			num = false;
+			isNumber = false;
 		
 		for(String arg:args)
 			System.out.print(arg+"\t");
 		System.out.println();
-		Clope.buildClusterer(args[0], args[1], Double.valueOf(args[2]), Integer.valueOf(args[3]), Integer.valueOf(args[4]), num);
+		Clope.buildClusterer(args[0], args[1], Double.valueOf(args[2]), Integer.valueOf(args[3]), Integer.valueOf(args[4]), isNumber);
 	}
 
 }

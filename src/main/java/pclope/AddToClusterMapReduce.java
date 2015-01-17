@@ -1,11 +1,10 @@
-package mapreduce;
+package pclope;
 
 
 import instance.Instance;
 
 import java.io.IOException;
 
-import main.Clope;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -19,6 +18,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
 
 import util.ClusterUtil;
 import cluster.ClusterArrayList;

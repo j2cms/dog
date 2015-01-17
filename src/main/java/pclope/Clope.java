@@ -1,18 +1,16 @@
-package main;
+package pclope;
 
 
 import instance.Instance;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import mapreduce.AddToClusterMapReduce;
-import mapreduce.MoveToClusterMapReduce;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -119,10 +117,19 @@ public class Clope {
 		NumberFormat nf = NumberFormat.getInstance(Locale.CHINA);
 		// Phase 1
 		long time1 = System.currentTimeMillis();
-		// 本地文件
-		String outDir = "output/"+basePath.substring(basePath.lastIndexOf("/")+1);
-		FileUtil.mkdirs(outDir);
-		FileWriter out = new FileWriter(outDir+"/" +dateTag+ ".txt");
+		
+		FileWriter out = null;
+		try {
+			// 本地文件
+			String outDir = "output/"+basePath.substring(basePath.lastIndexOf("/")+1);
+			FileUtil.mkdirs(outDir);
+			out = new FileWriter(outDir+"/" +dateTag+ ".txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("the user can't mkdir at current path.");
+		}
+		
+		
 		BufferedWriter bw = new BufferedWriter(out);
 		System.out.print(n);
 		bw.write(String.valueOf(n));
@@ -199,10 +206,10 @@ public class Clope {
 		HDFSUtil.deletePath(outputBasePath+"/clustering");
 		HDFSUtil.deletePath(outputBasePath+"/input");
 		HDFSUtil.deletePath(outputBasePath+"/split");
-		for(int i =0;i<iter;i++){
-			HDFSUtil.deletePath(outputBasePath+"/output/"+i);
-			HDFSUtil.deletePath(outputBasePath+"/profit/"+i);
-		}
+//		for(int i =0;i<iter;i++){
+//			HDFSUtil.deletePath(outputBasePath+"/output/"+i);
+//			HDFSUtil.deletePath(outputBasePath+"/profit/"+i);
+//		}
 		
 		System.out.println("done!");
 

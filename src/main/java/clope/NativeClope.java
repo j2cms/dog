@@ -1,8 +1,6 @@
-package main;
+package clope;
 
 import instance.Instance;
-import ipc.Clustering;
-import ipc.IPCUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,25 +13,19 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-
-
-import org.apache.hadoop.ipc.RPC;
+import pclope.Clope;
 
 import cluster.Cluster;
 import cluster.ClusterArrayList;
-/**
- * 将结果会写回IPC
- * @author aleak
- *
- */
-public class NativeClopeIPC {
+
+public class NativeClope {
 	
 	public static ClusterArrayList buildClusterer(ArrayList<Instance> data,double repulsion) throws IOException {
 
 		ClusterArrayList clusters = new ClusterArrayList();
 		
-		Clustering clustering = IPCUtil.getProxy();
-		clustering.clear();
+//		Clustering clustering = IPCUtil.getProxy();
+//		clustering.clear();
 		
 		NumberFormat nf = NumberFormat.getInstance(Locale.CHINA);
 		boolean moved;
@@ -52,7 +44,7 @@ public class NativeClopeIPC {
 		System.out.println("Phase 1 done, time cost " + nf.format(time2 - time1) + " ms, generate cluster " + clusters.size()+ ", profit = "+d[1]+", "+( (double) d[1])/n);
 		
 		long t1 = System.currentTimeMillis();
-		clustering.set(clusters);
+//		clustering.set(clusters);
 		long t2 = System.currentTimeMillis();
 		System.out.println("Phase 1 IPC cost " + nf.format(t2 - t1) + " ms"+"\n");
 
@@ -85,12 +77,12 @@ public class NativeClopeIPC {
 		
 		//将结果写回IPC
 		t1 = System.currentTimeMillis();
-		clustering.clear();
-		clustering.set(clusters);
+//		clustering.clear();
+//		clustering.set(clusters);
 		t2 = System.currentTimeMillis();
 		System.out.println("Phase 2 IPC cost " + nf.format(t2 - t1) + " ms");
 		
-		RPC.stopProxy(clustering);
+//		RPC.stopProxy(clustering);
 
 		return clusters;
 	}
@@ -168,7 +160,7 @@ public class NativeClopeIPC {
 //		testDNS();
 //		testDNSr();
 		if ((args.length !=3) || (args[0].equals("-help"))) {
-			System.out.println("命令格式:java -jar main.NativeClope input output repulsion");
+			System.out.println("命令格式:java -jar dog.jar input output repulsion");
 			System.exit(-1);
 		}
 		execute(args[0],args[1],Double.valueOf(args[2]));
