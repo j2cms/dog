@@ -33,7 +33,7 @@ public class KModes {
 			String output = outputBasePath +"/"+  iter +"/output/";
 			
 			Configuration conf = new Configuration();
-			conf.set("mapred.job.tracker", "master:9001");
+//			conf.set("mapred.job.tracker", "master:9001");
 			conf.set("outputBasePath", outputBasePath);
 			conf.setInt("iter", iter);
 
@@ -105,12 +105,20 @@ public class KModes {
 	}
 
 	public static void main(String[] args) throws Exception {
-		// args = new
-		// String[]{"hdfs://lenovo0:9000/user/hadoop/kmeans/input","hdfs://lenovo0:9000/user/hadoop/kmeans/center","hdfs://lenovo0:9000/user/hadoop/kmeans/output"};
-
-		args = new String[] { "/user/hadoop/kmodes/mushroom/input", "/user/hadoop/kmodes/mushroom/output", "/user/hadoop/kmodes/mushroom/center/c.txt" };
-		int k = 3;
-		int maxIter = 5;
+				
+		if ((args.length < 5) || (args[0].equals("-help"))) {
+			System.out.println("命令格式:hadoop jar dog.jar kmodes.KModes input output center k maxIter");
+			System.exit(-1);
+		}
+		
+		for(String arg:args)
+			System.out.print(arg+"\t");
+		System.out.println();
+		
+		
+//		args = new String[] { "/user/hadoop/kmodes/mushroom/input", "/user/hadoop/kmodes/mushroom/output", "/user/hadoop/kmodes/mushroom/center/c.txt" };
+		int k = Integer.valueOf(args[3]);
+		int maxIter = Integer.valueOf(args[4]);
 		String dateTag = "/k=" + k + "_m=" + maxIter + "_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		String outputBasePath = args[1] + dateTag;
 		

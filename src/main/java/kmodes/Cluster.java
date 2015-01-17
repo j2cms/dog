@@ -188,8 +188,8 @@ public class Cluster implements Writable {
 			this.center.getItemList().set(i, columns[i].getColum());
 		}
 		
-		System.out.println("old="+old);
-		System.out.println("center="+center);
+		System.out.println("cluster "+id+", old center="+old);
+		System.out.println("cluster "+id+", new center="+center);
 		
 		return this.different(old);
 	}

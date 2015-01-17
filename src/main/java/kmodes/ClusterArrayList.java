@@ -11,6 +11,7 @@ public class ClusterArrayList extends ArrayList<Cluster> implements Writable {
 
 	private static final long serialVersionUID = 1976555646037505629L;
 	
+	//dissimilarity
 	public int d= 0;
 
 	@Override

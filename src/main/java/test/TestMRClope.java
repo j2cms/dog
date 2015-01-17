@@ -1,6 +1,6 @@
 package test;
 
-import main.Clope;
+import pclope.Clope;
 
 public class TestMRClope {
 

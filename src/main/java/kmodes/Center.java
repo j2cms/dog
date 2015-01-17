@@ -47,7 +47,7 @@ public class Center {
 		FileSystem hdfs = FileSystem.get(conf); // 获得HDFS文件系统的对象
 		
 		String path =outputBasePath +"/"+  iter +"/center";
-		System.out.println("3.path = "+path);
+//		System.out.println("3.path = "+path);
 		
 		FileStatus[] inputFiles = hdfs.listStatus(new Path(path));
 		for (int i = 0; i < inputFiles.length; i++) {
@@ -62,7 +62,7 @@ public class Center {
 		}
 		clusters.renew();
 		
-		System.out.println("3=================\n clusters.d="+clusters.d);
+		System.out.println("clusters.d="+clusters.d);
 //		for(Cluster c:clusters)
 //			System.out.println(c);
 		

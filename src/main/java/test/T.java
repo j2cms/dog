@@ -1,6 +1,6 @@
 package test;
 
-import main.MRClope;
+import pclope.PClope;
 
 
 
@@ -8,6 +8,6 @@ public class T {
 
 
 	public static void main (String args []) throws Exception{
-		MRClope.testMushroom();
+		PClope.testMushroom();
 	}
 }
