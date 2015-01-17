@@ -1,4 +1,4 @@
-package mapreduce;
+package sortout;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import util.HDFSUtil;
 
-public class ViewClusterMapReduce {
+public class SortOutClusterMapReduce {
 
 	// map将输入中的value化成IntWritable类型，作为输出的key
 	public static class Map extends Mapper<Text, Text, Text, Text> {
@@ -52,7 +52,7 @@ public class ViewClusterMapReduce {
 //		conf.set("mapred.job.tracker", "lenovo0:9001");
 
 		Job job = new Job(conf, "generate cluster to view");
-		job.setJarByClass(ViewClusterMapReduce.class);
+		job.setJarByClass(SortOutClusterMapReduce.class);
 
 		// 设置Map和Reduce处理类
 		job.setMapperClass(Map.class);

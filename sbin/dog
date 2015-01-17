@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+print_usage()
+{
+  echo "Usage: dog X args"
+  echo "参数解释如下:"
+  echo "X为算法{pclope,kmodes,sortout}之一,args为参数.例:"
+  echo "dog pclope input output repulsion p maxIter isNumber"
+  echo "dog kmodes input output center k maxIter"
+}
+
+
+print_pclope_usage()
+{
+  echo "Usage: dog pclope input output repulsion p maxIter isNumber"
+  echo "分类数据聚类算法pclope,参数解释如下:"
+  echo "  input		HDFS上的输入文件或者目录"
+  echo "  output	HDFS上的输出目录"
+  echo "  repulsion	排斥因子,符点型,一般大于1,值越大,生成聚类个数越多"
+  echo "  p		划分参数,整型,会生成p!个map,值越大,准确率越高"
+  echo "  maxIter	最大迭代次数"
+  echo "  isNumber	用1|0表示数据记录的属性项是否需要编号"
+}
+
+print_kmodes_usage()
+{
+  echo "Usage: dog kmodes input output center k maxIter"
+  echo "分类数据聚类算法kmodes,参数解释如下:"
+  echo "  input		HDFS上的输入文件或者目录"
+  echo "  output	HDFS上的输出目录"
+  echo "  center	初始中心的文件"
+  echo "  k		簇个数"
+  echo "  maxIter	最大迭代次数"
+}
+
+
+print_sortout_usage()
+{
+  echo "Usage: dog kmodes input ouput k"
+  echo "将key value对表示的数据记录按key值划分到不同的文件。参数解释如下:"
+  echo "  input		HDFS上的输入文件或者目录"
+  echo "  output	HDFS上的输出目录"
+  echo "  k		簇个数"
+}
+
+
+if [ $# = 0 ]; then
+	 print_usage
+	 exit 1
+elif [ "$1" = "pclope" ]; then
+	if [ $# = 7 ]; then
+		hadoop jar $DOG_HOME/lib/dog.jar pclope.PClope $2 $3 $4 $5 $6 $7
+	else
+	  print_pclope_usage
+	  exit 1
+	fi
+elif [ "$1" = "kmodes" ]; then
+	if [ $# = 6 ];then
+		 hadoop jar $DOG_HOME/lib/dog.jar kmodes.KModes $2 $3 $4 $5 $6
+	else
+	  print_kmodes_usage
+	  exit 1
+	fi
+elif [ "$1" = "sortout" ]; then
+	if [ $# = 4 ]; then
+		hadoop jar $DOG_HOME/lib/dog.jar sortout.SortOut $2 $3 $4
+	else
+	  print_sortout_usage
+	  exit 1
+	fi	
+else
+	 print_usage
+	 exit 1
+fi
+
+
