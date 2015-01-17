@@ -44,7 +44,7 @@ print_sortout_usage()
 }
 
 
-if [ $# = 0 ]; then
+if [ $# = 0 ]|[ $1 = "--help" ]|[ $1 = "-h" ]; then
 	 print_usage
 	 exit 1
 elif [ "$1" = "pclope" ]; then
