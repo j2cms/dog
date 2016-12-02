@@ -1,11 +1,17 @@
 Parallel Clustering Algorithm for Categorical Data
 
-兼容hadoop 1.xx和 Hadoop 2.xx 平台
 
-目前已经实现的聚类算法：
-1)kmodes
-2)pclope
 
+##目前已经实现的聚类算法：
+###kmodes
+
+###pclope
+GB/T 7714	
+丁祥武, 郭涛, 王梅, 等. 一种大规模分类数据聚类算法及其并行实现[J]. 计算机研究与发展, 53(5): 1063-1071.
+http://crad.ict.ac.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=3169
+
+##运行环境及配置
+兼容hadoop 1.xx和 Hadoop 2.xx 平台。
 在Hadoop集群的master主机上配置如下：
 将dog文件夹放入/usr/local/目录下,将dog_home.sh里的内容拷贝到/etc/profile文件里，并执行source /etc/profile使之生效.
 dog中只需包含sbin和lib目录，lib目录中的dog.jar是由src源码编译而成(使用eclipse的export功能得到).
@@ -15,7 +21,7 @@ dog中只需包含sbin和lib目录，lib目录中的dog.jar是由src源码编译
 
 工具用法提示：: dog 或者 dog -h
 
-算法的基本使用：
+##算法的基本使用：
 
 1)dog kmodes input output center k maxIter
 
