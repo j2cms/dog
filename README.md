@@ -6,11 +6,11 @@
 ### kmodes
 Tao, Guo, Ding Xiangwu, and Li Yefeng. "Parallel k-modes algorithm based on MapReduce." In Digital Information, Networking, and Wireless Communications (DINWC), 2015 Third International Conference on, pp. 176-179. IEEE, 2015.
 
-[下载](/paper/1.pdf)
+[论文下载](/paper/1.pdf)
 ### pclope
 丁祥武, 郭涛, 王梅, and 金冉. "一种大规模分类数据聚类算法及其并行实现." 计算机研究与发展 53, no. 5 (2016): 1063-1071.
 
-[下载](http://crad.ict.ac.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=3169)
+[论文下载](http://crad.ict.ac.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=3169)
 
 ## 运行环境及配置
 兼容hadoop 1.xx和 Hadoop 2.xx 平台。
